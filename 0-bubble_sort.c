@@ -1,41 +1,50 @@
-#include <stdio.h>
-#include <cs50.h>
 #include "sort.h"
-#include <stdlib.h>
 
 /**
- * bubble_sort - Sorts an array of integers in ascending order using Bubble sort
- * @array: The array to be sorted
- * @size: Number of elements in @array
+ * swap_ints - Swap two integers in an array.
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
  */
-void bubble_sort(int *array, size_t size) {
-    if (array == NULL || size < 2) {
-        return; // No need to sort an array with less than 2 elements
-    }
+void swap_ints(int *a, int *b)
+{
+        int tmp;
 
-    size_t i, j;
-    int temp;
-    int swapped;
+        tmp = *a;
+        *a = *b;
+        *b = tmp;
+}
 
-    for (i = 0; i < size - 1; i++) {
-        swapped = 0; // Flag to check if any swaps occurred in this pass
+/**
+ * bubble_sort - Sort an array of integers in ascending order.
+ * @array: An array of integers to sort.
+ * @size: The size of the array.
+ *
+ * Description: Prints the array after each swap.
+ */
+void bubble_sort(int *array, size_t size)
+{
+    size_t i, len = size;
+    bool bubbly = false;
 
-        for (j = 0; j < size - i - 1; j++) {
-            if (array[j] > array[j + 1]) {
-                // Swap elements and set swapped flag to true
-                temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
-                swapped = 1;
+    if (array == NULL || size < 2)
+        return;
 
-                // Print the array after each swap
+    while (bubbly == false)
+    {
+        bubbly = true;
+        for (i = 0; i < len - 1; i++)
+        {
+            if (array[i] > array[i + 1])
+            {
+                swap_ints(array + i, array + i + 1);
                 print_array(array, size);
+                bubbly = false;
             }
         }
+        len--;
 
-        // If no swaps occurred, the array is already sorted
-        if (swapped == 0) {
+        // Check if the array is already sorted
+        if (bubbly)
             break;
-        }
     }
 }
